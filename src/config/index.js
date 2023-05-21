@@ -19,4 +19,9 @@ module.exports = {
   swagger: {
     path: "/documentation",
   },
+
+  mapbox: {
+    pathBase: "https://api.mapbox.com/geocoding/v5/mapbox.places/",
+    apiKey: process.env.MAPBOX_API_KEY,
+  },
 };
