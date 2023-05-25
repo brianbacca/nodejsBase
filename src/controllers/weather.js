@@ -1,19 +1,7 @@
 const express = require("express");
-
-const { findCities } = require("../services/cityService");
-const { findWeather } = require("../services/weatherService");
+const { findWeather, wetherByCityId } = require("../services/weatherService");
+const logger = require("../loaders/logger");
 const Success = require("../handlers/successHandler");
-
-/**
- *
- * @param {express.Request} req
- * @param {express.Response} res
- */
-const cities = async (req, res) => {
-  const cities = await findCities(req.params.city);
-  const success = new Success(cities);
-  res.json(success);
-};
 
 /**
  *
@@ -28,7 +16,20 @@ const weather = async (req, res) => {
   res.json(success);
 };
 
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+const weatherByCityId = async (req, res) => {
+  const { city, id } = req.params;
+  logger.info(`city: ${city} id: ${id}`);
+  const weather = await wetherByCityId(city, id);
+  const success = new Success(weather);
+  res.json(success);
+};
+
 module.exports = {
-  cities,
   weather,
+  weatherByCityId,
 };
