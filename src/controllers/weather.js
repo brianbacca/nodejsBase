@@ -8,12 +8,16 @@ const Success = require("../handlers/successHandler");
  * @param {express.Request} req
  * @param {express.Response} res
  */
-const weather = async (req, res) => {
-  const { lon, lat } = req.query;
+const weather = async (req, res, next) => {
+  try {
+    const { lon, lat } = req.query;
 
-  const weather = await findWeather(lon, lat);
-  const success = new Success(weather);
-  res.json(success);
+    const weather = await findWeather(lon, lat);
+    const success = new Success(weather);
+    res.json(success);
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**
@@ -22,11 +26,15 @@ const weather = async (req, res) => {
  * @param {express.Response} res
  */
 const weatherByCityId = async (req, res) => {
-  const { city, id } = req.params;
-  logger.info(`city: ${city} id: ${id}`);
-  const weather = await wetherByCityId(city, id);
-  const success = new Success(weather);
-  res.json(success);
+  try {
+    const { city, id } = req.params;
+    logger.info(`city: ${city} id: ${id}`);
+    const weather = await wetherByCityId(city, id);
+    const success = new Success(weather);
+    res.json(success);
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = {

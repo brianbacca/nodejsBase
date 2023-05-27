@@ -12,6 +12,7 @@ class CityRepository {
   }
 
   async findCities(city) {
+    // throw new Error("Prueba");
     try {
       const instace = axios.create({
         baseURL: `${this.pathBase}${city}.json`,

@@ -19,13 +19,12 @@ const findWeather = async (lon, lat) => {
 
 const wetherByCityId = async (city, id) => {
   const cities = await cityRepository.findCities(city);
-  // logger.info(`--->cities: ${JSON.stringify(cities)}}`);
-  const aCity = cities.features.filter((e) => e.id === id);
+  const cityData = cities.features.find((e) => e.id === id);
 
   debugger;
   return findWeather(
-    aCity[0].geometry.coordinates[0],
-    aCity[0].geometry.coordinates[1]
+    cityData.geometry.coordinates[0],
+    cityData.geometry.coordinates[1]
   );
 };
 
